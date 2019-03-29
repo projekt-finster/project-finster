@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿// SKRYPT ZROBIONY PRZEZ: tabulator
+
+using UnityEngine;
 
 public class TPPController : MonoBehaviour
 {
-    // SKRYPT ZROBIONY PRZEZ: tabulator
 
     private const float Y_CLAMP_MIN_VALUE = 0f; // minimalny kąt nachylenia kamery
     private const float Y_CLAMP_MAX_VALUE = 80f; // maksymalny kąt nachylenia kamery
@@ -11,6 +12,7 @@ public class TPPController : MonoBehaviour
     /* Nie wiem jak rozwiążemy problem aktywnej kamery*/
     /* (do cutscenek czy na okazję zmiany postaci)    */
     /* więc na razie zostawiam ją na private.         */
+    private Rigidbody rb;
 
     private Transform cameraLookAt; // obiekt na który patrzy kamera
     private Transform cameraTransform; // pozycja kamery
@@ -21,14 +23,16 @@ public class TPPController : MonoBehaviour
 
     private float distanceToPlayer = 3.0f; // w przyszłości będzie można go zmieniać przyciskiem lub scrollwheelem
 
-    // w przyszłości zastąpimy tą zmienną statystykami
+    // w przyszłości zastąpimy te zmienne statystykami
     private float movementSpeed = 15f;
+    private float jumpForce = 150f;
 
     private void Start()
     {
         playerCamera = GetComponent<Camera>();
         cameraTransform = transform;
         cameraLookAt = GameObject.FindGameObjectWithTag("Player").transform; // skrypt wyszukuje obiekt z tagiem "Player", jest to placeholder do debugowania
+        rb = cameraLookAt.GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked; // tutaj zlockuje kursor, w przyszłości się to wywali
     }
 
@@ -69,6 +73,13 @@ public class TPPController : MonoBehaviour
     {
         cameraLookAt.Translate(Vector3.forward * moveY * movementSpeed * Time.fixedDeltaTime);
         cameraLookAt.Translate(Vector3.right * moveX * movementSpeed * Time.fixedDeltaTime);
+        if (Input.GetButtonDown("Jump") && !cameraLookAt.GetComponent<Statistics>().jumped) { Jump(); }
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(0, jumpForce, 0);
+        cameraLookAt.GetComponent<Statistics>().jumped = true;
     }
 
     #endregion
