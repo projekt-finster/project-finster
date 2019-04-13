@@ -5,7 +5,7 @@ using UnityEngine;
 public class TPPController : MonoBehaviour
 {
 
-    private const float Y_CLAMP_MIN_VALUE = 0f; // minimalny kąt nachylenia kamery
+    private const float Y_CLAMP_MIN_VALUE = 30f; // minimalny kąt nachylenia kamery
     private const float Y_CLAMP_MAX_VALUE = 80f; // maksymalny kąt nachylenia kamery
 
     private Camera playerCamera;
@@ -21,7 +21,8 @@ public class TPPController : MonoBehaviour
     private float moveX = 0f;
     private float moveY = 0f;
 
-    private float distanceToPlayer = 3.0f; // w przyszłości będzie można go zmieniać przyciskiem lub scrollwheelem
+    private float distanceToPlayer = 2.0f; // w przyszłości będzie można go zmieniać przyciskiem lub scrollwheelem
+    private float offsetYValue = 1.0f;
 
     // w przyszłości zastąpimy te zmienne statystykami
     private float movementSpeed = 15f;
@@ -44,7 +45,7 @@ public class TPPController : MonoBehaviour
 
     private void LateUpdate()
     {
-        rotate(); // funkcja odpowiedzialna za rotację kamery
+        moveCamera(); // funkcja odpowiedzialna za rotację kamery
     }
 
     #region MOVEMENT_FUNCTIONS
@@ -60,12 +61,13 @@ public class TPPController : MonoBehaviour
         moveY = Input.GetAxisRaw("Vertical");
     }
 
-    private void rotate()
+    private void moveCamera()
     {
         Vector3 offset = new Vector3(0f, 0f, -distanceToPlayer);
+        Vector3 offsetY = new Vector3(0f, offsetYValue, 0f);
         Quaternion rotation = Quaternion.Euler(currentCameraY, currentCameraX, 0f);
         cameraTransform.position = cameraLookAt.position + rotation * offset;
-        cameraTransform.LookAt(cameraLookAt.position);
+        cameraTransform.LookAt(cameraLookAt.position + offsetY);
         cameraLookAt.rotation = Quaternion.Euler(0f, currentCameraX, 0f);
     }
 
