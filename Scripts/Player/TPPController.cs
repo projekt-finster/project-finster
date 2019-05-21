@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TPPController : MonoBehaviour
 {
+    [HideInInspector] public bool doMove;
 
     private const float Y_CLAMP_MIN_VALUE = 30f; // minimalny kąt nachylenia kamery
     private const float Y_CLAMP_MAX_VALUE = 80f; // maksymalny kąt nachylenia kamery
@@ -21,8 +22,8 @@ public class TPPController : MonoBehaviour
     private float moveX = 0f;
     private float moveY = 0f;
 
-    private float distanceToPlayer = 2.0f; // w przyszłości będzie można go zmieniać przyciskiem lub scrollwheelem
-    private float offsetYValue = 1.0f;
+    private float distanceToPlayer = 3.0f; // w przyszłości będzie można go zmieniać przyciskiem lub scrollwheelem
+    private float offsetYValue = 2.0f;
 
     // w przyszłości zastąpimy te zmienne statystykami
     private float movementSpeed = 15f;
@@ -30,6 +31,7 @@ public class TPPController : MonoBehaviour
 
     private void Start()
     {
+        doMove = true;
         playerCamera = GetComponent<Camera>();
         cameraTransform = transform;
         cameraLookAt = GameObject.FindGameObjectWithTag("Player").transform; // skrypt wyszukuje obiekt z tagiem "Player", jest to placeholder do debugowania
@@ -52,13 +54,16 @@ public class TPPController : MonoBehaviour
 
     private void getInput()
     {
-        currentCameraX += Input.GetAxisRaw("Mouse X");
-        currentCameraY += Input.GetAxisRaw("Mouse Y");
+        if (doMove)
+        {
+            currentCameraX += Input.GetAxisRaw("Mouse X");
+            currentCameraY += Input.GetAxisRaw("Mouse Y");
 
-        currentCameraY = Mathf.Clamp(currentCameraY, Y_CLAMP_MIN_VALUE, Y_CLAMP_MAX_VALUE);
+            currentCameraY = Mathf.Clamp(currentCameraY, Y_CLAMP_MIN_VALUE, Y_CLAMP_MAX_VALUE);
 
-        moveX = Input.GetAxisRaw("Horizontal");
-        moveY = Input.GetAxisRaw("Vertical");
+            moveX = Input.GetAxisRaw("Horizontal");
+            moveY = Input.GetAxisRaw("Vertical");
+        }
     }
 
     private void moveCamera()
