@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 702f0523bdc387943ab0d6bfc48e120a, type: 3}
+  m_Name: TestChar
+  m_EditorClassIdentifier: 
+  characterName: Pierwszy
+  characterGuild: 0
+  behaviour: 0
+  health: 100
+  mana: 100
+  stamina: 100
+  strength: 100
+  agility: 100
+  power: 100
+  fencing: 0
+  polearms: 0
+  swords: 0
+  axesNBlunts: 0
+  twoHanded: 0
+  bows: 0
+  crossbows: 0
+  blowers: 0
+  twoWeapons: 0
+  parrying: 0
+  dodge: 0
+  disarming: 0
+  willpower: 0
+  providence: 0
+  knowledge: 0
+  manaRegen: 0
